@@ -1,0 +1,41 @@
+<div class="container">
+  <h1><%= @list.name %></h1>
+</div>
+
+<!-- Display the existing bookmarks -->
+<% @list.bookmarks.each do |bookmark| %>
+  <p><%= bookmark.movie.title %></p>
+<% end %>
+
+<!-- List of bookmarked movies -->
+<% if @list.bookmarks.present? %>
+  <h2>Bookmarked Movies:</h2>
+  <ul>
+    <% @list.bookmarks.each do |bookmark| %>
+      <li><%= bookmark.movie.title %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies have been bookmarked.</p>
+<% end %>
+
+<!-- Form to add a new bookmark -->
+
+
+<%= simple_form_for(@list, @bookmark) do |f| %>
+  <%= f.input :name %>
+  <%= f.submit %>
+<% end %>
+
+
+
+<%=  %>
+<!-- Form to add a new bookmark -->
+<%= form_with(model: [@list, @bookmark], url: create_bookmark_bookmark_path(@list)) do |form| %>
+  <div class="field">
+    <%= form.collection_select(:movie_id, @movies, :id, :title, prompt: "Select a movie") %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Add Bookmark' %>
+  </div>
+<% end %>
